@@ -13,6 +13,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 class ExpenseServiceTest {
 
+
     private ExpenseService expenseService;
 
     @BeforeEach
@@ -63,9 +64,12 @@ class ExpenseServiceTest {
     }
 
     @Test
-    void should_throw_unexpected_project_exception_if_project_is_invalid() {
-        // given
-        // when
-        // then
+    void should_throw_unexpected_project_exception_if_project_is_invalid() throws UnexpectedProjectTypeException {
+        // give
+        Project project = new Project(ProjectType.UNEXPECTED_PROJECT_TYPE, "Project");
+        //when
+        UnexpectedProjectTypeException unexpectedProjectTypeException = Assertions.assertThrows(UnexpectedProjectTypeException.class, ()->{ expenseService.getExpenseCodeByProjectTypeAndName(project);});
+        //then
+        Assertions.assertEquals("You enter invalid project type", unexpectedProjectTypeException.getMessage());
     }
 }
